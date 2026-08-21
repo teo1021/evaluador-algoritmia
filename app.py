@@ -5,7 +5,7 @@ import streamlit as st
 # ==========================================================
 
 st.set_page_config(
-    page_title="Evaluador de Algoritmia",
+    page_title="AKS — Algorithmic Knowledge Standard",
     page_icon="💻",
     layout="centered"
 )
