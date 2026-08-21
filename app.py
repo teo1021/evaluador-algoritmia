@@ -445,13 +445,13 @@ if enviar:
         if conclusion == "SABE ALGORITMIA":
 
             st.success(
-                " RESULTADO: SABE ALGORITMIA"
+                conclusion
             )
 
         else:
 
             st.error(
-                " RESULTADO: NO SABE ALGORITMIA"
+                conclusion
             )
 
         st.progress(
