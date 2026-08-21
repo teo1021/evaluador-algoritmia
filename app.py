@@ -238,19 +238,19 @@ def obtener_nivel(puntos):
     """
 
     if puntos <= 6:
-        return "AKS-1", "Nivel inicial", "NO SABE ALGORITMIA"
+        return "AKS-1", "Nivel inicial", "Conocimiento muy limitado"
 
     elif puntos <= 12:
-        return "AKS-2", "Nivel básico", "NO SABE ALGORITMIA"
+        return "AKS-2", "Nivel básico", "Comprende fundamentos de algoritmia"
 
     elif puntos <= 18:
-        return "AKS-3", "Nivel intermedio", "SABE ALGORITMIA"
+        return "AKS-3", "Nivel intermedio", "Nivel intermedio y resolución autónoma"
 
     elif puntos <= 24:
-        return "AKS-4", "Nivel avanzado", "SABE ALGORITMIA"
+        return "AKS-4", "Nivel avanzado", "Buen dominio del razonamiento algorítmico"
 
     else:
-        return "AKS-5", "Nivel experto", "SABE ALGORITMIA"
+        return "AKS-5", "Nivel experto", "Dominio avanzado de algoritmia"
 
 
 def evaluar_respuestas(respuestas):
@@ -297,7 +297,7 @@ def evaluar_respuestas(respuestas):
 # INTERFAZ
 # ==========================================================
 
-st.title(" Evaluador de Conocimientos en Algoritmia")
+st.title("AKS — Algorithmic Knowledge Standard")
 
 st.write(
     "Este sistema analiza el desempeño del estudiante "
