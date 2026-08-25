@@ -3,7 +3,7 @@ name = "evaluador-algoritmia"
 version = "0.1.0"
 description = "Default template for PDM package"
 authors = [
-    {name = "Juan Osorio",email = "96839034+JuanOsorioa@users.noreply.github.com"},
+    {name = "Juan Osorio", email = "96839034+JuanOsorioa@users.noreply.github.com"},
 ]
 dependencies = [
     "streamlit>=1.62.0",
@@ -15,3 +15,7 @@ license = {text = "MIT"}
 
 [tool.pdm]
 distribution = false
+
+
+[tool.poetry]
+package-mode = false
