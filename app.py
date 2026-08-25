@@ -20,20 +20,6 @@ preguntas = [
         "tema": "Secuenciación",
         "dificultad": "Fácil",
         "puntos": 1,
-        "pregunta": "Una persona desea preparar una taza de té. ¿Cuál es el orden correcto?",
-        "opciones": {
-            "A": "Hervir agua → Colocar la bolsa de té → Servir el agua → Esperar 3 minutos",
-            "B": "Colocar la bolsa → Hervir agua → Esperar → Servir",
-            "C": "Servir el agua → Hervir → Bolsa → Esperar",
-            "D": "Esperar → Hervir → Bolsa → Servir"
-        },
-        "respuesta": "A"
-    },
-    {
-        "numero": 2,
-        "tema": "Secuenciación",
-        "dificultad": "Fácil",
-        "puntos": 1,
         "pregunta": "En un cajero automático, ¿qué acción debe ocurrir primero?",
         "opciones": {
             "A": "Entregar el dinero",
@@ -44,7 +30,7 @@ preguntas = [
         "respuesta": "A"
     },
     {
-        "numero": 3,
+        "numero": 2,
         "tema": "Secuenciación",
         "dificultad": "Media",
         "puntos": 2,
@@ -58,7 +44,7 @@ preguntas = [
         "respuesta": "B"
     },
     {
-        "numero": 4,
+        "numero": 3,
         "tema": "Condicionales",
         "dificultad": "Fácil",
         "puntos": 1,
@@ -72,21 +58,7 @@ preguntas = [
         "respuesta": "B"
     },
     {
-        "numero": 5,
-        "tema": "Condicionales",
-        "dificultad": "Media",
-        "puntos": 2,
-        "pregunta": "Un descuento se aplica si el cliente es estudiante o adulto mayor. ¿Qué operador lógico corresponde?",
-        "opciones": {
-            "A": "Y",
-            "B": "O",
-            "C": "NO",
-            "D": "MIENTRAS"
-        },
-        "respuesta": "B"
-    },
-    {
-        "numero": 6,
+        "numero": 4,
         "tema": "Condicionales",
         "dificultad": "Difícil",
         "puntos": 4,
@@ -100,7 +72,7 @@ preguntas = [
         "respuesta": "A"
     },
     {
-        "numero": 7,
+        "numero": 5,
         "tema": "Iteración",
         "dificultad": "Fácil",
         "puntos": 1,
@@ -114,21 +86,7 @@ preguntas = [
         "respuesta": "C"
     },
     {
-        "numero": 8,
-        "tema": "Iteración",
-        "dificultad": "Media",
-        "puntos": 2,
-        "pregunta": "Una impresora imprime las páginas desde la 1 hasta la 25. ¿Cuántas iteraciones realiza?",
-        "opciones": {
-            "A": "24",
-            "B": "25",
-            "C": "26",
-            "D": "50"
-        },
-        "respuesta": "B"
-    },
-    {
-        "numero": 9,
+        "numero": 6,
         "tema": "Iteración",
         "dificultad": "Difícil",
         "puntos": 4,
@@ -142,7 +100,7 @@ preguntas = [
         "respuesta": "C"
     },
     {
-        "numero": 10,
+        "numero": 7,
         "tema": "Diseño de algoritmos",
         "dificultad": "Fácil",
         "puntos": 1,
@@ -156,7 +114,7 @@ preguntas = [
         "respuesta": "A"
     },
     {
-        "numero": 11,
+        "numero": 8,
         "tema": "Diseño de algoritmos",
         "dificultad": "Media",
         "puntos": 2,
@@ -170,7 +128,7 @@ preguntas = [
         "respuesta": "A"
     },
     {
-        "numero": 12,
+        "numero": 9,
         "tema": "Diseño de algoritmos",
         "dificultad": "Media",
         "puntos": 2,
@@ -184,35 +142,7 @@ preguntas = [
         "respuesta": "B"
     },
     {
-        "numero": 13,
-        "tema": "Diseño de algoritmos",
-        "dificultad": "Difícil",
-        "puntos": 4,
-        "pregunta": "Deseas encontrar la temperatura máxima registrada durante una semana. ¿Cuál debe ser el primer paso del algoritmo?",
-        "opciones": {
-            "A": "Guardar como máxima la temperatura del primer día.",
-            "B": "Calcular el promedio.",
-            "C": "Ordenar todas las temperaturas.",
-            "D": "Eliminar valores repetidos."
-        },
-        "respuesta": "A"
-    },
-    {
-        "numero": 14,
-        "tema": "Análisis y eficiencia",
-        "dificultad": "Media",
-        "puntos": 2,
-        "pregunta": "Dos algoritmos buscan un nombre en una lista ordenada de 1.000 elementos. Algoritmo A: revisa desde el inicio. Algoritmo B: divide repetidamente la lista por la mitad. ¿Cuál suele requerir menos comparaciones?",
-        "opciones": {
-            "A": "Algoritmo A",
-            "B": "Algoritmo B",
-            "C": "Ambos requieren las mismas",
-            "D": "Depende del alfabeto"
-        },
-        "respuesta": "B"
-    },
-    {
-        "numero": 15,
+        "numero": 10,
         "tema": "Análisis y eficiencia",
         "dificultad": "Fácil",
         "puntos": 1,
@@ -231,7 +161,7 @@ preguntas = [
     # ======================================================
 
     {
-        "numero": 16,
+        "numero": 11,
         "tema": "Secuenciación",
         "dificultad": "Fácil",
         "puntos": 1,
@@ -246,7 +176,7 @@ preguntas = [
         "respuesta": "B"
     },
     {
-        "numero": 17,
+        "numero": 12,
         "tema": "Condicionales",
         "dificultad": "Media",
         "puntos": 2,
@@ -261,7 +191,7 @@ preguntas = [
         "respuesta": "B"
     },
     {
-        "numero": 18,
+        "numero": 13,
         "tema": "Iteración",
         "dificultad": "Media",
         "puntos": 2,
@@ -276,7 +206,7 @@ preguntas = [
         "respuesta": "B"
     },
     {
-        "numero": 19,
+        "numero": 14,
         "tema": "Diseño de algoritmos",
         "dificultad": "Difícil",
         "puntos": 4,
@@ -291,7 +221,7 @@ preguntas = [
         "respuesta": "A"
     },
     {
-        "numero": 20,
+        "numero": 15,
         "tema": "Análisis y eficiencia",
         "dificultad": "Difícil",
         "puntos": 4,
