@@ -1,5 +1,10 @@
 import streamlit as st
 
+from database import engine
+from database import guardar_intento
+from sqlalchemy import text
+
+
 # ==========================================================
 # CONFIGURACIÓN
 # ==========================================================
@@ -10,11 +15,36 @@ st.set_page_config(
     layout="centered"
 )
 
+
+# ==========================================================
+# PRUEBA DE CONEXIÓN
+# ==========================================================
+
+try:
+
+    with engine.connect() as connection:
+
+        resultado = connection.execute(
+            text("SELECT 1")
+        )
+
+        st.success(
+            f"Conexión exitosa: {resultado.scalar()}"
+        )
+
+except Exception as e:
+
+    st.error(
+        f"Error de conexión: {e}"
+    )
+
+
 # ==========================================================
 # INFORMACIÓN DEL EXAMEN
 # ==========================================================
 
 preguntas = [
+
     {
         "numero": 1,
         "tema": "Secuenciación",
@@ -29,6 +59,7 @@ preguntas = [
         },
         "respuesta": "A"
     },
+
     {
         "numero": 2,
         "tema": "Secuenciación",
@@ -43,6 +74,7 @@ preguntas = [
         },
         "respuesta": "B"
     },
+
     {
         "numero": 3,
         "tema": "Condicionales",
@@ -57,6 +89,7 @@ preguntas = [
         },
         "respuesta": "B"
     },
+
     {
         "numero": 4,
         "tema": "Condicionales",
@@ -71,6 +104,7 @@ preguntas = [
         },
         "respuesta": "A"
     },
+
     {
         "numero": 5,
         "tema": "Iteración",
@@ -85,6 +119,7 @@ preguntas = [
         },
         "respuesta": "C"
     },
+
     {
         "numero": 6,
         "tema": "Iteración",
@@ -99,6 +134,7 @@ preguntas = [
         },
         "respuesta": "C"
     },
+
     {
         "numero": 7,
         "tema": "Diseño de algoritmos",
@@ -113,6 +149,7 @@ preguntas = [
         },
         "respuesta": "A"
     },
+
     {
         "numero": 8,
         "tema": "Diseño de algoritmos",
@@ -127,6 +164,7 @@ preguntas = [
         },
         "respuesta": "A"
     },
+
     {
         "numero": 9,
         "tema": "Diseño de algoritmos",
@@ -141,6 +179,7 @@ preguntas = [
         },
         "respuesta": "B"
     },
+
     {
         "numero": 10,
         "tema": "Análisis y eficiencia",
@@ -155,10 +194,6 @@ preguntas = [
         },
         "respuesta": "B"
     },
-
-    # ======================================================
-    # PREGUNTAS NUEVAS CON IMÁGENES (16-20)
-    # ======================================================
 
     {
         "numero": 11,
@@ -175,6 +210,7 @@ preguntas = [
         },
         "respuesta": "B"
     },
+
     {
         "numero": 12,
         "tema": "Condicionales",
@@ -190,6 +226,7 @@ preguntas = [
         },
         "respuesta": "B"
     },
+
     {
         "numero": 13,
         "tema": "Iteración",
@@ -205,6 +242,7 @@ preguntas = [
         },
         "respuesta": "B"
     },
+
     {
         "numero": 14,
         "tema": "Diseño de algoritmos",
@@ -220,6 +258,7 @@ preguntas = [
         },
         "respuesta": "A"
     },
+
     {
         "numero": 15,
         "tema": "Análisis y eficiencia",
@@ -237,9 +276,15 @@ preguntas = [
     }
 ]
 
-# Puntaje máximo posible del examen (se calcula automáticamente,
-# así que si agregas o quitas preguntas no hay que tocar nada más)
-PUNTAJE_MAXIMO = sum(p["puntos"] for p in preguntas)
+
+# ==========================================================
+# PUNTAJE MÁXIMO
+# ==========================================================
+
+PUNTAJE_MAXIMO = sum(
+    p["puntos"]
+    for p in preguntas
+)
 
 
 # ==========================================================
@@ -247,17 +292,13 @@ PUNTAJE_MAXIMO = sum(p["puntos"] for p in preguntas)
 # ==========================================================
 
 def obtener_nivel(puntos, puntaje_maximo):
-    """
-    Clasifica al estudiante según la escala AKS,
-    usando el porcentaje obtenido (no un número fijo de puntos),
-    para que funcione sin importar cuántas preguntas tenga el examen.
 
-    Retorna: (codigo_nivel, descripcion, mensaje, aprobado)
-    """
-
-    porcentaje = (puntos / puntaje_maximo) * 100
+    porcentaje = (
+        puntos / puntaje_maximo
+    ) * 100
 
     if porcentaje <= 20:
+
         return (
             "AKS-1",
             "Nivel inicial",
@@ -267,6 +308,7 @@ def obtener_nivel(puntos, puntaje_maximo):
         )
 
     elif porcentaje <= 40:
+
         return (
             "AKS-2",
             "Nivel básico",
@@ -276,6 +318,7 @@ def obtener_nivel(puntos, puntaje_maximo):
         )
 
     elif porcentaje <= 60:
+
         return (
             "AKS-3",
             "Nivel intermedio",
@@ -285,6 +328,7 @@ def obtener_nivel(puntos, puntaje_maximo):
         )
 
     elif porcentaje <= 80:
+
         return (
             "AKS-4",
             "Nivel avanzado",
@@ -294,6 +338,7 @@ def obtener_nivel(puntos, puntaje_maximo):
         )
 
     else:
+
         return (
             "AKS-5",
             "Nivel experto",
@@ -304,10 +349,6 @@ def obtener_nivel(puntos, puntaje_maximo):
 
 
 def evaluar_respuestas(respuestas):
-    """
-    Evalúa todas las respuestas y calcula
-    el puntaje total.
-    """
 
     puntos = 0
     correctas = 0
@@ -324,6 +365,7 @@ def evaluar_respuestas(respuestas):
         if respuesta_usuario == respuesta_correcta:
 
             puntos += valor
+
             correctas += 1
 
             resultados.append({
@@ -342,14 +384,20 @@ def evaluar_respuestas(respuestas):
                 "puntos": 0
             })
 
-    return puntos, correctas, resultados
+    return (
+        puntos,
+        correctas,
+        resultados
+    )
 
 
 # ==========================================================
 # INTERFAZ
 # ==========================================================
 
-st.title("AKS — Algorithmic Knowledge Standard")
+st.title(
+    "AKS — Algorithmic Knowledge Standard"
+)
 
 st.write(
     "Este sistema analiza el desempeño del estudiante "
@@ -365,15 +413,21 @@ st.info(
 
 st.divider()
 
+
 # ==========================================================
 # DATOS DEL ESTUDIANTE
 # ==========================================================
 
+correo = st.text_input(
+    "Correo institucional"
+)
+
 nombre = st.text_input(
-    " Nombre del estudiante"
+    "Nombre del estudiante"
 )
 
 st.divider()
+
 
 # ==========================================================
 # FORMULARIO
@@ -399,12 +453,15 @@ with st.form("examen_algoritmia"):
             pregunta["pregunta"]
         )
 
-        # Si la pregunta tiene imagen asociada, se muestra aquí
         if pregunta.get("imagen"):
+
             st.image(
                 pregunta["imagen"],
-                caption=f"Figura – Pregunta {pregunta['numero']}",
-                use_container_width=True
+                caption=(
+                    f"Figura – Pregunta "
+                    f"{pregunta['numero']}"
+                ),
+                width="stretch"
             )
 
         opciones = list(
@@ -421,13 +478,15 @@ with st.form("examen_algoritmia"):
             key=f"pregunta_{pregunta['numero']}"
         )
 
-        respuestas_usuario.append(respuesta)
+        respuestas_usuario.append(
+            respuesta
+        )
 
         st.divider()
 
     enviar = st.form_submit_button(
         "🔎 Evaluar conocimientos",
-        use_container_width=True
+        width="stretch"
     )
 
 
@@ -437,24 +496,38 @@ with st.form("examen_algoritmia"):
 
 if enviar:
 
-    if nombre.strip() == "":
+    # ======================================================
+    # VALIDACIONES
+    # ======================================================
+
+    if correo.strip() == "":
 
         st.error(
-            " Debes ingresar el nombre del estudiante."
+            "Debes ingresar el correo institucional."
+        )
+
+    elif nombre.strip() == "":
+
+        st.error(
+            "Debes ingresar el nombre del estudiante."
         )
 
     elif None in respuestas_usuario:
 
         faltantes = [
             preguntas[i]["numero"]
-            for i, r in enumerate(respuestas_usuario)
-            if r is None
+            for i, respuesta in enumerate(respuestas_usuario)
+            if respuesta is None
         ]
 
         st.error(
-            " Debes responder todas las preguntas antes de enviar. "
+            "Debes responder todas las preguntas antes de enviar. "
             f"Faltan: {', '.join(str(n) for n in faltantes)}"
         )
+
+    # ======================================================
+    # PROCESAR EXAMEN
+    # ======================================================
 
     else:
 
@@ -463,20 +536,79 @@ if enviar:
         )
 
         nivel, descripcion, conclusion, aprobado = obtener_nivel(
-            puntos, PUNTAJE_MAXIMO
+            puntos,
+            PUNTAJE_MAXIMO
         )
 
         porcentaje = (
             puntos / PUNTAJE_MAXIMO
         ) * 100
 
+        # ==================================================
+        # PREPARAR RESPUESTAS PARA LA BASE DE DATOS
+        # ==================================================
+
+        respuestas_bd = []
+
+        for i, pregunta in enumerate(preguntas):
+
+            respuesta_usuario = respuestas_usuario[i]
+
+            es_correcta = (
+                respuesta_usuario == pregunta["respuesta"]
+            )
+
+            puntos_obtenidos = (
+                pregunta["puntos"]
+                if es_correcta
+                else 0
+            )
+
+            respuestas_bd.append({
+                "pregunta_id": pregunta["numero"],
+                "respuesta": respuesta_usuario,
+                "es_correcta": es_correcta,
+                "puntos": puntos_obtenidos
+            })
+
+                # ==============================================
+        # GUARDAR RESULTADO EN LA BASE DE DATOS
         # ==============================================
+
+        try:
+
+            intento_id = guardar_intento(
+                correo=correo,
+                nombre=nombre,
+                respuestas=respuestas_bd,
+                puntos=puntos,
+                correctas=correctas,
+                puntaje_maximo=PUNTAJE_MAXIMO,
+                porcentaje=porcentaje,
+                nivel=nivel,
+                aprobado=aprobado
+            )
+
+            st.success(
+                f"Resultado guardado correctamente. "
+                f"ID del intento: {intento_id}"
+            )
+
+        except Exception as e:
+
+            st.error(
+                f"No fue posible guardar el resultado: {e}"
+            )
+
+        # ==================================================
         # RESULTADO GENERAL
-        # ==============================================
+        # ==================================================
 
         st.divider()
 
-        st.header(" Resultado de la evaluación")
+        st.header(
+            "Resultado de la evaluación"
+        )
 
         st.success(
             f"Estudiante: {nombre}"
@@ -505,9 +637,9 @@ if enviar:
                 f"{porcentaje:.1f}%"
             )
 
-        # ==============================================
+        # ==================================================
         # NIVEL AKS
-        # ==============================================
+        # ==================================================
 
         st.subheader(
             f"🎯 Nivel obtenido: {nivel}"
@@ -533,14 +665,14 @@ if enviar:
             puntos / PUNTAJE_MAXIMO
         )
 
-        # ==============================================
+        # ==================================================
         # DETALLE
-        # ==============================================
+        # ==================================================
 
         st.divider()
 
         st.subheader(
-            " Detalle de resultados"
+            "Detalle de resultados"
         )
 
         for resultado in resultados:
@@ -561,14 +693,14 @@ if enviar:
                     f"Incorrecta (+0 puntos)"
                 )
 
-        # ==============================================
+        # ==================================================
         # RESULTADO POR ÁREA
-        # ==============================================
+        # ==================================================
 
         st.divider()
 
         st.subheader(
-            " Desempeño por área"
+            "Desempeño por área"
         )
 
         temas = {}
@@ -584,17 +716,24 @@ if enviar:
                     "maximos": 0
                 }
 
-            temas[tema]["maximos"] += pregunta["puntos"]
+            temas[tema]["maximos"] += (
+                pregunta["puntos"]
+            )
 
-            if respuestas_usuario[i] == pregunta["respuesta"]:
+            if (
+                respuestas_usuario[i]
+                == pregunta["respuesta"]
+            ):
 
-                temas[tema]["obtenidos"] += pregunta["puntos"]
+                temas[tema]["obtenidos"] += (
+                    pregunta["puntos"]
+                )
 
         for tema, datos in temas.items():
 
             porcentaje_tema = (
-                datos["obtenidos"] /
-                datos["maximos"]
+                datos["obtenidos"]
+                / datos["maximos"]
             ) * 100
 
             st.write(
@@ -608,9 +747,9 @@ if enviar:
                 porcentaje_tema / 100
             )
 
-        # ==============================================
+        # ==================================================
         # FORTALEZAS Y DEBILIDADES
-        # ==============================================
+        # ==================================================
 
         fortalezas = []
         debilidades = []
@@ -618,17 +757,21 @@ if enviar:
         for tema, datos in temas.items():
 
             porcentaje_tema = (
-                datos["obtenidos"] /
-                datos["maximos"]
+                datos["obtenidos"]
+                / datos["maximos"]
             ) * 100
 
             if porcentaje_tema >= 70:
 
-                fortalezas.append(tema)
+                fortalezas.append(
+                    tema
+                )
 
             else:
 
-                debilidades.append(tema)
+                debilidades.append(
+                    tema
+                )
 
         st.divider()
 
@@ -636,7 +779,9 @@ if enviar:
 
         with col1:
 
-            st.subheader(" Fortalezas")
+            st.subheader(
+                "Fortalezas"
+            )
 
             if fortalezas:
 
@@ -649,37 +794,37 @@ if enviar:
             else:
 
                 st.write(
-                    "No se identificaron fortalezas "
-                    "claras."
+                    "No se identificaron fortalezas claras."
                 )
 
         with col2:
 
-            st.subheader(" Por mejorar")
+            st.subheader(
+                "Por mejorar"
+            )
 
             if debilidades:
 
                 for tema in debilidades:
 
                     st.write(
-                        f" {tema}"
+                        f"⚠️ {tema}"
                     )
 
             else:
 
                 st.write(
-                    "No se identificaron áreas "
-                    "críticas."
+                    "No se identificaron áreas críticas."
                 )
 
-        # ==============================================
+        # ==================================================
         # CONCLUSIÓN
-        # ==============================================
+        # ==================================================
 
         st.divider()
 
         st.subheader(
-            " Conclusión"
+            "Conclusión"
         )
 
         st.write(
